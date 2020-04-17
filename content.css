@@ -52,7 +52,7 @@
     display: block;
     text-align: left;
 }
-#commentBtn {
+#submitBtn {
     display: inline-block;
     box-shadow: none;
     box-sizing: border-box;

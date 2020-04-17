@@ -1,3 +1,6 @@
 chrome.runtime.onInstalled.addListener(function() {
-  console.log('onInstalled');
+  console.log('oninstalled');
+  chrome.storage.local.get('notes', function(result) {
+    console.log('notes', result.notes);
+  });
 });

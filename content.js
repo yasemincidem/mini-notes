@@ -45,7 +45,7 @@ document.addEventListener('mouseup', function () {
                                                       aria-label="Yorum taslağı">
                                             </textarea>
                                             <div id="buttonGroup">
-                                                      <div role="button" id="commentBtn" style="user-select: none;" aria-disabled="false" aria-label="Submit" tabindex="0">Submit</div>
+                                                      <div role="button" id="submitBtn" style="user-select: none;" aria-disabled="false" aria-label="Submit" tabindex="0">Submit</div>
                                                       <div role="button" id="cancelBtn" tabindex="0" aria-label="Cancel" style="user-select: none;">Cancel</div>
                                             </div>
                                        </div>`;
@@ -56,6 +56,21 @@ document.addEventListener('mouseup', function () {
         autoExpand(event.target);
       }, false);
       document.getElementById('cancelBtn').addEventListener('click', function (event) {
+        document.getElementById('commentBox').remove();
+      }, false);
+      document.getElementById('submitBtn').addEventListener('click', function (event) {
+        chrome.storage.local.get({notes: []}, function(result) {
+          let newNotes;
+          if (result) {
+            result.notes.push({ left , top: topOfSelectedText , value: 'test'});
+            newNotes = result.notes;
+          } else {
+            newNotes = [{ left , top: topOfSelectedText , value: 'test'}]
+          }
+          chrome.storage.local.set({'notes': newNotes}, function() {
+            console.log('Value is setted');
+          });
+        });
         document.getElementById('commentBox').remove();
       }, false);
     });
