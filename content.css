@@ -1,0 +1,28 @@
+#commentBox {
+    position: absolute;
+    width: 282px;
+    z-index: 1;
+    color: rgb(0, 0, 0);
+    font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 154px;
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: left;
+    user-select: text;
+    white-space: normal;
+    background-color: rgb(255, 255, 255);
+    border-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+#selectedTextImage {
+    background-image: url(http://icons.iconarchive.com/icons/gakuseisean/ivista-2/256/Alarm-Plus-icon.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
