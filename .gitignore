@@ -20,7 +20,7 @@
 
 # editors
 *.swp
-.idea
+.idea/
 .vs/
 .vscode/
 .DS_Store
