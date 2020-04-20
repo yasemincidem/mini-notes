@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Mini Notes",
+  "version": "1.0",
+  "description": "Take mini notes for each page and save them to look into later",
+  "icons": {
+    "16": "icons/logo-small-16.png",
+    "48": "icons/logo-small-48.png",
+    "128": "icons/logo-small-128.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_title": "Chrome Extension Boilerplate",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+}
