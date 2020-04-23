@@ -1,15 +1,15 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const baseManifest = require("./public/manifest.json");
+const baseManifest = require("../public/manifest.json");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
+const paths = require('./paths');
 const config = {
   mode: "development",
   devtool: "cheap-module-source-map",
   entry: {
-    app: path.join(__dirname, "./src/index.js"),
-    content: path.join(__dirname, "./src/content.js"),
-    background: path.join(__dirname, "./public/background.js"),
+    app: [paths.appIndexJs],
+    content: [paths.appContentJs],
+    background: [paths.appBackgroundJs],
   },
   output: {
     path: path.resolve(__dirname, "./build"),
@@ -19,21 +19,9 @@ const config = {
     extensions: ["*", ".js"]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: "boilerplate", // change this to your app title
-      meta: {
-        charset: "utf-8",
-        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
-        "theme-color": "#000000"
-      },
-      manifest: "manifest.json",
-      filename: "index.html",
-      template: "./public/index.html",
-      hash: true
-    }),
     new CopyPlugin([
       {
-        from: "public/icons",
+        from: "public/assets/icons",
         to: "icons"
       }
     ]),
