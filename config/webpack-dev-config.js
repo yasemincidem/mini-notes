@@ -21,7 +21,7 @@ const config = {
   plugins: [
     new CopyPlugin([
       {
-        from: "public/assets/icons",
+        from: "public/icons",
         to: "icons"
       }
     ]),

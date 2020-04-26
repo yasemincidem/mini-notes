@@ -4,9 +4,9 @@
   "version": "1.0",
   "description": "Take mini notes for each page and save them to look into later",
   "icons": {
-    "16": "assets/icons/logo-small-16.png",
-    "48": "assets/icons/logo-small-48.png",
-    "128": "assets/icons/logo-small-128.png"
+    "16": "icons/logo-small-16.png",
+    "48": "icons/logo-small-48.png",
+    "128": "icons/logo-small-128.png"
   },
   "background": {
     "scripts": ["background.js"]
@@ -26,7 +26,9 @@
     "default_popup": "index.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "background"
   ],
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }

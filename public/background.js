@@ -1,13 +1,11 @@
-chrome.runtime.onInstalled.addListener(function() {
-  console.log('oninstalled');
-  chrome.storage.local.get('notes', function(result) {
-    console.log('notes', result.notes);
+// eslint-disable-next-line
+chrome.tabs.onUpdated.addListener(function () {
+  // eslint-disable-next-line
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const activeTab = tabs[0];
+    if (activeTab) {
+      // eslint-disable-next-line
+      chrome.tabs.sendMessage(activeTab.id, {activeTabId: activeTab.id});
+    }
   });
-  chrome.tabs.query({active: true, currentWindow:true},
-    function(tabs) {
-      var activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id,
-        {"message": "clicked_browser_action"}
-      );
-    });
 });

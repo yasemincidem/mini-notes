@@ -11,7 +11,7 @@ const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = {
-  appIcons: resolveApp('public/assets/icons'), // For images and other assets
+  appIcons: resolveApp('public/icons'), // For images and other assets
   appBuild: resolveApp('build'), // Prod built files end up here
   appConfig: resolveApp('config'), // App config files
   appHtml: resolveApp('public/index.html'),
