@@ -71,7 +71,7 @@
     border-color: transparent !important;
     border-image: initial !important;
 }
-#cancelBtn {
+.cancelBtn {
     display: inline-block;
     box-shadow: none;
     box-sizing: border-box;

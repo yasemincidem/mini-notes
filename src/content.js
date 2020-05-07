@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './content.css';
+import IconButton from './components/IconButton';
+import CommentBox from './components/CommentBox';
 
 const getSelectionText = () => {
   let selectedText = '';
@@ -17,55 +19,36 @@ const getSelectionDimensions = () => {
     top: document.documentElement.scrollTop + range.top + range.height,
   };
 };
-const saveComment = (left, top, setCommentBox, value, tabId) => {
-  let notes = [];
-  // eslint-disable-next-line
-  chrome.storage.local.get({ notes: [] }, function (result) {
-    if (result) {
-      const currentNodes = result.notes.find((i) => i.tabId === tabId);
-      const currentNewNodes = currentNodes ? currentNodes.newNotes : [];
-      if (currentNodes) {
-        currentNewNodes.push({
-          left,
-          top,
-          value,
-        });
-        result.notes.map((node) =>
-          node.tabId === tabId ? { newNotes: currentNewNodes, tabId } : node,
-        );
-      } else {
-        result.notes.push({ newNotes: [{ left, top, value }], tabId });
-      }
-      notes = result.notes;
-    }
-    // eslint-disable-next-line
-    chrome.storage.local.set({ notes }, function () {
-      setCommentBox(false);
-    });
-  });
-};
 const ContentReact = () => {
-  const [noteButtonVisible, setNoteButton] = useState(false);
-  const [commentBoxVisible, setCommentBox] = useState(false);
-  const [tabId, setTabId] = useState(0);
-  const textArea = useRef();
+  const [miniNoteIcon, setMiniNoteIcon] = useState(false);
+  const [commentBox, setCommentBox] = useState(false);
+  // const [tabId, setTabId] = useState(0);
+  // const [activeNotes, setActiveNotes] = useState(0);
   useEffect(() => {
     // eslint-disable-next-line
-    chrome.storage.local.get({ notes: [] }, function (response) {
-      console.log('response', response);
-    });
-    // eslint-disable-next-line
-    chrome.runtime.onMessage.addListener(function (request) {
-      if (request) {
-        setTabId(request.activeTabId);
-      }
-      return true;
-    });
+    // chrome.runtime.onMessage.addListener(function (request) {
+    //   if (request) {
+    //     setTabId(request.activeTabId);
+    //     // eslint-disable-next-line
+    //     chrome.storage.local.get({ notes: [] }, function (response) {
+    //       console.log('response', response);
+    //       const activeNotes = response.notes.find(
+    //         (note) => note.tabId === request.activeTabId,
+    //       );
+    //       setActiveNotes(activeNotes);
+    //       setCommentBox(true);
+    //       setMiniNoteIcon(true);
+    //     });
+    //   }
+    //   return true;
+    // });
 
     function handleReleaseClick() {
       const selectedText = getSelectionText();
       if (selectedText.length) {
-        setNoteButton(true);
+        setMiniNoteIcon(true);
+      } else {
+        setMiniNoteIcon(false);
       }
     }
 
@@ -76,55 +59,30 @@ const ContentReact = () => {
       document.removeEventListener('mouseup', handleReleaseClick);
     };
   }, []);
+  // if (activeNotes) {
+  //   return activeNotes.newNotes.map((activeNote) => {});
+  // }
   if (getSelectionText()) {
     const { left, top } = getSelectionDimensions();
     return (
       <div>
-        {noteButtonVisible && (
-          <button
-            type="button"
-            id="selectedText"
-            style={{ position: 'absolute', left, top }}
+        {miniNoteIcon && (
+          <IconButton
             onClick={() => {
               setCommentBox(true);
-              setNoteButton(false);
+              setMiniNoteIcon(false);
             }}
-          >
-            <div id="selectedTextImage" />
-          </button>
+            left={left}
+            top={top}
+          />
         )}
-        {commentBoxVisible && (
-          <div id="commentBox" style={{ left, top }}>
-            <textarea
-              ref={textArea}
-              id="commentTextBox"
-              autoComplete="input-area"
-            />
-            <div id="buttonGroup">
-              <button
-                type="button"
-                id="submitBtn"
-                onClick={() =>
-                  saveComment(
-                    left,
-                    top,
-                    setCommentBox,
-                    textArea.current.value,
-                    tabId,
-                  )
-                }
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                id="cancelBtn"
-                onClick={() => setCommentBox(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+        {commentBox && (
+          <CommentBox
+            left={left}
+            top={top}
+            tabId={0}
+            setCommentBox={setCommentBox}
+          />
         )}
       </div>
     );
